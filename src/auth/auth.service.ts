@@ -42,7 +42,6 @@ export class AuthService {
             id: true,
             email: true,
             createdAt: true,
-            emailVerified: true,
           },
         });
         return user;
@@ -81,16 +80,11 @@ export class AuthService {
           id: true,
           email: true,
           password: true,
-          emailVerified: true,
         },
       });
 
       if (!user) {
         throw new NotFoundException("User with email doesn't exist");
-      }
-
-      if (!user.emailVerified) {
-        throw new UnauthorizedException('User Email Not Verified');
       }
 
       const checkPassword = await compare(password, user.password);
@@ -108,7 +102,6 @@ export class AuthService {
           select: {
             id: true,
             email: true,
-            emailVerified: true,
             createdAt: true,
           },
         });
@@ -136,7 +129,6 @@ export class AuthService {
           id: true,
           email: true,
           password: true,
-          emailVerified: true,
         },
       });
 
