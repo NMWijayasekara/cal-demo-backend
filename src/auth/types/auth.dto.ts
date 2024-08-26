@@ -21,7 +21,7 @@ export class CreateUserDto {
   password: string;
 }
 
-export class SignInEmailDto {
+export class LoginEmailDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()

@@ -9,22 +9,18 @@ import {
   Res,
   UseGuards
 } from '@nestjs/common';
-import { ApiBody, ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { AccessTokenGuard } from './guards/AccessTokenGuard';
 import { RefreshTokenGuard } from './guards/RefreshTokenGuard';
 import {
   CreateUserDto,
-  SignInEmailDto
+  LoginEmailDto,
 } from './types/auth.dto';
 import { errorResponse, successResponse } from './utils/response.utils';
 
 @ApiTags('Auth')
-@ApiHeader({
-  name: 'X-API-Key',
-  description: 'API key needed to access the endpoints',
-})
 @Controller({
   version: '1',
   path: 'auth',
@@ -72,14 +68,14 @@ export class AuthController {
     }
   }
 
-  @ApiOperation({ summary: 'Sign in user with email and password' })
+  @ApiOperation({ summary: 'Log in user with email and password' })
   @ApiBody({
-    type: SignInEmailDto,
+    type: LoginEmailDto,
   })
   @HttpCode(200)
-  @Post('/sign-in')
-  async signIn(
-    @Body() { email, password }: SignInEmailDto,
+  @Post('/login')
+  async Login(
+    @Body() { email, password }: LoginEmailDto,
     @Res() res: Response,
   ) {
     try {
@@ -110,11 +106,11 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Delete user and user account' })
   @ApiBody({
-    type: SignInEmailDto,
+    type: LoginEmailDto,
   })
   @Delete('deleteUser')
   async deleteUser(
-    @Body() { email, password }: SignInEmailDto,
+    @Body() { email, password }: LoginEmailDto,
     @Res() res: Response,
   ) {
     try {
