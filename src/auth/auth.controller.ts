@@ -7,17 +7,14 @@ import {
   Post,
   Req,
   Res,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { AccessTokenGuard } from './guards/AccessTokenGuard';
 import { RefreshTokenGuard } from './guards/RefreshTokenGuard';
-import {
-  CreateUserDto,
-  LoginEmailDto,
-} from './types/auth.dto';
+import { CreateUserDto, LoginEmailDto } from './types/auth.dto';
 import { errorResponse, successResponse } from './utils/response.utils';
 
 @ApiTags('Auth')
@@ -26,9 +23,7 @@ import { errorResponse, successResponse } from './utils/response.utils';
   path: 'auth',
 })
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {}
 
   private ACCESS_TOKEN_EXPIRATION_TIME = 15 * 60 * 1000; // 15 minutes in milliseconds
   private REFRESH_TOKEN_EXPIRATION_TIME = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
